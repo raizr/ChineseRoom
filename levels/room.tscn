@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://jr4p4xeywq5c"]
+
+[ext_resource type="Script" path="res://scripts/room_controller.gd" id="1_a3m2a"]
+[ext_resource type="PackedScene" uid="uid://bng5hnbwnaynw" path="res://scenes/player/player_fpv.tscn" id="2_ks806"]
+
+[sub_resource type="Animation" id="Animation_ev5n8"]
+resource_name = "move_right"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 3.07285, 0.5, 0.213025, 0.966667, 1, 3.073, 0.5, -5)
+
+[sub_resource type="Animation" id="Animation_fa3ru"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 3.07285, 0.5, 0.213025)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8a581"]
+_data = {
+"RESET": SubResource("Animation_fa3ru"),
+"move_right": SubResource("Animation_ev5n8")
+}
+
+[sub_resource type="Environment" id="Environment_fg4cc"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_f1je2"]
+
+[sub_resource type="Compositor" id="Compositor_54unc"]
+
+[node name="Scene" type="Node3D" node_paths=PackedStringArray("animationPlayer", "player")]
+script = ExtResource("1_a3m2a")
+animationPlayer = NodePath("Player/AnimationPlayer")
+player = NodePath("Player")
+
+[node name="Player" parent="." instance=ExtResource("2_ks806")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.07285, 0.5, 0.213025)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_8a581")
+}
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fg4cc")
+camera_attributes = SubResource("CameraAttributesPractical_f1je2")
+compositor = SubResource("Compositor_54unc")
+
+[connection signal="animation_finished" from="Player/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

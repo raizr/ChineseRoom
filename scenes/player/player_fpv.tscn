@@ -1,0 +1,86 @@
+[gd_scene load_steps=7 format=3 uid="uid://bng5hnbwnaynw"]
+
+[ext_resource type="Script" path="res://scripts/player/player_fpv.gd" id="1_lwf15"]
+[ext_resource type="Shader" path="res://scenes/player/posterization.gdshader" id="3_ov667"]
+[ext_resource type="Shader" path="res://scenes/player/colorize.gdshader" id="4_35s3w"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eb20b"]
+shader = ExtResource("3_ov667")
+shader_parameter/level1 = Color(0.16, 0.0773333, 0, 0.780392)
+shader_parameter/level2 = Color(0.23, 0.111167, 0, 0.780392)
+shader_parameter/level3 = Color(0.59, 0.275333, 0, 0.780392)
+shader_parameter/level4 = Color(0.88, 0.410667, 0, 0.780392)
+shader_parameter/threshold1 = 0.1
+shader_parameter/threshold2 = 0.4
+shader_parameter/threshold3 = 0.6
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hw5px"]
+shader = ExtResource("4_35s3w")
+shader_parameter/SCREEN_WIDTH = 12.0
+shader_parameter/RED_COMPONENT = 8.0
+shader_parameter/GREEN_COMPONENT = 8.0
+shader_parameter/BLUE_COMPONENT = 8.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hosp7"]
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+script = ExtResource("1_lwf15")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.75643, 0)
+
+[node name="CameraPlayer" type="Camera3D" parent="Head" groups=["player_camera"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.27722, 0)
+fov = 60.0
+
+[node name="UI" type="Node" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="UI/Control"]
+visible = false
+position = Vector2(642.2, 360.5)
+scale = Vector2(6.418, 3.595)
+copy_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/Control/BackBufferCopy"]
+material = SubResource("ShaderMaterial_eb20b")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = -100.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="UI/Control"]
+visible = false
+position = Vector2(639, 360)
+scale = Vector2(6.37, 3.54)
+copy_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/Control/BackBufferCopy2"]
+material = SubResource("ShaderMaterial_hw5px")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -101.0
+offset_top = -102.0
+offset_right = -93.0
+offset_bottom = -93.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27892e-08, 0.998353, 0.521357)
+shape = SubResource("CapsuleShape3D_hosp7")

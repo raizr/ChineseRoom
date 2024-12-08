@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgv36hs0paour"]
+
+[ext_resource type="Script" path="res://scripts/enemy/enemy.gd" id="1_2ta3w"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hosp7"]
+
+[node name="Enemy" type="CharacterBody3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+script = ExtResource("1_2ta3w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27892e-08, 0.998353, 0.521357)
+shape = SubResource("CapsuleShape3D_hosp7")
+
+[connection signal="tree_entered" from="CollisionShape3D" to="." method="_on_collision_shape_3d_tree_entered"]

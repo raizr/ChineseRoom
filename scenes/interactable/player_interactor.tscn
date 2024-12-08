@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://i7s7lbxjnw6m"]
+
+[ext_resource type="PackedScene" uid="uid://c522xir8qs10c" path="res://scenes/interactable/interactor.tscn" id="1_7i50w"]
+[ext_resource type="Script" path="res://scripts/interactable/player_interactor.gd" id="2_efecf"]
+
+[node name="PlayerInteractor" instance=ExtResource("1_7i50w")]
+script = ExtResource("2_efecf")
+
+[node name="CollisionShape3D" parent="." index="0"]
+visible = false

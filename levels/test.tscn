@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://cpuhehfwt5l72"]
+
+[ext_resource type="PackedScene" uid="uid://dj26sacnhty4r" path="res://models/devblocks/blocks/basic_block.tscn" id="1_46bcy"]
+[ext_resource type="PackedScene" uid="uid://camvcri7e11vi" path="res://models/devblocks/blocks/colored_block.tscn" id="2_f6iir"]
+[ext_resource type="PackedScene" uid="uid://7gv6q50fuutj" path="res://scenes/player/player.tscn" id="2_gadba"]
+[ext_resource type="PackedScene" uid="uid://yupomeyi12x" path="res://models/devblocks/blocks/emission_block.tscn" id="3_6fldv"]
+[ext_resource type="PackedScene" uid="uid://b40tmw5lxpg70" path="res://scenes/monitor/monitor.tscn" id="6_sdol8"]
+[ext_resource type="PackedScene" uid="uid://f4kiu8wt23fw" path="res://models/PSX Model Pack/Desk/desk.tscn" id="7_gutsa"]
+[ext_resource type="PackedScene" uid="uid://b3rxcc6tucova" path="res://scenes/door/door.tscn" id="7_rjwep"]
+
+[sub_resource type="Environment" id="Environment_0amtm"]
+background_mode = 1
+tonemap_mode = 2
+
+[node name="Test" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0amtm")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.19593, 4.73958, 4.12369)
+light_energy = 0.684
+light_indirect_energy = 0.211
+omni_range = 10.454
+omni_attenuation = 0.0
+
+[node name="Player" parent="." instance=ExtResource("2_gadba")]
+transform = Transform3D(-0.404631, 0, 0.91448, 0, 1, 0, -0.91448, 0, -0.404631, 6.03846, 0.992451, -0.71836)
+
+[node name="monitor" parent="." instance=ExtResource("6_sdol8")]
+transform = Transform3D(1.64207, 0, 0.439992, 0, 1.7, 0, -0.439992, 0, 1.64207, -0.780873, 3.32635, 8.10378)
+
+[node name="Desk" parent="." instance=ExtResource("7_gutsa")]
+transform = Transform3D(-0.968104, 0, -0.250549, 0, 1, 0, 0.250549, 0, -0.968104, 0.198039, 0.992451, 7.64772)
+
+[node name="BasicBlock" parent="." instance=ExtResource("1_46bcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.440601, 2.07331, 1.24222)
+
+[node name="ColoredBlock" parent="." instance=ExtResource("2_f6iir")]
+transform = Transform3D(12.7925, 0, 0, 0, 1, 0, 0, 0, 19.0739, 2.03239, 0.0668758, 0.447401)
+
+[node name="EmissionBlock" parent="." instance=ExtResource("3_6fldv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.70072, 1.9687, 2.66347)
+
+[node name="Door" parent="." instance=ExtResource("7_rjwep")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.34733, 3.21459, 2.25976)

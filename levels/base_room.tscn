@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://d1s7ly1480vhi"]
+
+[ext_resource type="PackedScene" uid="uid://dj26sacnhty4r" path="res://models/devblocks/blocks/basic_block.tscn" id="1_kmgq1"]
+[ext_resource type="Script" path="res://scripts/mirror_controller.gd" id="2_3wlle"]
+[ext_resource type="PackedScene" uid="uid://dmtyqf8q7fnt5" path="res://scripts/buttons/switch.tscn" id="3_vi76s"]
+[ext_resource type="PackedScene" uid="uid://bgv36hs0paour" path="res://scenes/player/enemy.tscn" id="4_wwj0n"]
+
+[node name="Room" type="Node3D"]
+
+[node name="BasicBlock" parent="." instance=ExtResource("1_kmgq1")]
+transform = Transform3D(12.8771, 0, 0, 0, 1, 0, 0, 0, 5.46917, -0.0951911, 0, 0.0122824)
+
+[node name="Mirror" parent="." instance=ExtResource("1_kmgq1")]
+transform = Transform3D(0.065704, 0, 0, 0, 1.84473, 0, 0, 0, 5.77662, -0.86344, 1.40805, 0.0111103)
+script = ExtResource("2_3wlle")
+
+[node name="BasicBlock3" parent="." instance=ExtResource("1_kmgq1")]
+transform = Transform3D(6.6903, 0, 0, 0, 1.96293, 0, 0, 0, 0.194121, -1.08111, 1.40283, -2.67776)
+
+[node name="BasicBlock4" parent="." instance=ExtResource("1_kmgq1")]
+transform = Transform3D(7.02046, 0, 0, 0, 1.81715, 0, 0, 0, 0.172433, -1.43081, 1.37557, 2.79217)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.92758, 2.59942, 0)
+omni_range = 3.34
+
+[node name="switchNO" parent="." instance=ExtResource("3_vi76s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.52753, 1.9824, 0.755071)
+answer = "NO"
+
+[node name="switchYES" parent="." instance=ExtResource("3_vi76s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51493, 1.99395, -0.387479)
+answer = "YES"
+
+[node name="Enemy" parent="." instance=ExtResource("4_wwj0n")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.59631, 0.487136, 0)

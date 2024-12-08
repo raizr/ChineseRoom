@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://f4kiu8wt23fw"]
+
+[ext_resource type="PackedScene" uid="uid://b4s34chrul4yf" path="res://models/PSX Model Pack/Desk/desk1.fbx" id="1_xiuos"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cviim"]
+size = Vector3(1.8009, 2.33569, 4.94067)
+
+[node name="Desk" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.701092, 1.16605, 0.00802779)
+shape = SubResource("BoxShape3D_cviim")
+
+[node name="Root Scene" parent="." instance=ExtResource("1_xiuos")]

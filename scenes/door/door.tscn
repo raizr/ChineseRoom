@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://b3rxcc6tucova"]
+
+[ext_resource type="Script" path="res://scripts/door/door.gd" id="1_lkpf5"]
+[ext_resource type="PackedScene" uid="uid://bwsmr5pub5pgp" path="res://models/door.glb" id="2_k8jkc"]
+[ext_resource type="PackedScene" uid="uid://8u6i666vcqu1" path="res://scenes/interactable/interactable.tscn" id="3_fpkv2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ql7ov"]
+size = Vector3(0.157471, 2.5722, 1.49402)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e34wp"]
+size = Vector3(0.142181, 2.56097, 1.50269)
+
+[sub_resource type="Animation" id="Animation_fkp24"]
+resource_name = "open"
+length = 0.5
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("door")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.5, 1, 0, 0.707107, 0, 0.707107)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0vska"]
+_data = {
+"open": SubResource("Animation_fkp24")
+}
+
+[node name="Door" type="Node3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 3.98369, 0)
+script = ExtResource("1_lkpf5")
+
+[node name="door" parent="." instance=ExtResource("2_k8jkc")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="door"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="door/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00402832, -9.15527e-05, -0.760315)
+shape = SubResource("BoxShape3D_ql7ov")
+
+[node name="Interactable" parent="door" instance=ExtResource("3_fpkv2")]
+
+[node name="CollisionShape3D" parent="door/Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00917554, -0.00811255, -0.0670276)
+shape = SubResource("BoxShape3D_e34wp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0vska")
+}
+
+[connection signal="interacted" from="door/Interactable" to="." method="_on_interactable_interacted"]
+
+[editable path="door/Interactable"]

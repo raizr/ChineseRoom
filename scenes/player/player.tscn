@@ -1,0 +1,98 @@
+[gd_scene load_steps=9 format=3 uid="uid://7gv6q50fuutj"]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_1w47b"]
+[ext_resource type="PackedScene" uid="uid://i7s7lbxjnw6m" path="res://scenes/interactable/player_interactor.tscn" id="2_yg2qw"]
+[ext_resource type="Shader" path="res://scenes/player/posterization.gdshader" id="3_g1voo"]
+[ext_resource type="Shader" path="res://scenes/player/colorize.gdshader" id="4_nbmlh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0gind"]
+size = Vector3(1.77704, 2.97626, 2.33845)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8ucbn"]
+margin = 0.0
+radius = 0.845
+height = 5.26
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eb20b"]
+shader = ExtResource("3_g1voo")
+shader_parameter/level1 = Color(0.16, 0.0773333, 0, 0.780392)
+shader_parameter/level2 = Color(0.23, 0.111167, 0, 0.780392)
+shader_parameter/level3 = Color(0.59, 0.275333, 0, 0.780392)
+shader_parameter/level4 = Color(0.88, 0.410667, 0, 0.780392)
+shader_parameter/threshold1 = 0.1
+shader_parameter/threshold2 = 0.4
+shader_parameter/threshold3 = 0.6
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hw5px"]
+shader = ExtResource("4_nbmlh")
+shader_parameter/SCREEN_WIDTH = 12.0
+shader_parameter/RED_COMPONENT = 8.0
+shader_parameter/GREEN_COMPONENT = 8.0
+shader_parameter/BLUE_COMPONENT = 8.0
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_1w47b")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.75643, 0)
+
+[node name="CameraPlayer" type="Camera3D" parent="Head" groups=["player_camera"]]
+fov = 60.0
+
+[node name="PlayerInteractor" parent="Head" node_paths=PackedStringArray("player") instance=ExtResource("2_yg2qw")]
+player = NodePath("../..")
+
+[node name="CollisionShape3D" parent="Head/PlayerInteractor" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00525236, -1.31589, -1.1862)
+shape = SubResource("BoxShape3D_0gind")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.64, 0)
+shape = SubResource("CapsuleShape3D_8ucbn")
+
+[node name="UI" type="Node" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="UI/Control"]
+visible = false
+position = Vector2(642.2, 360.5)
+scale = Vector2(6.418, 3.595)
+copy_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/Control/BackBufferCopy"]
+material = SubResource("ShaderMaterial_eb20b")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = -100.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="UI/Control"]
+position = Vector2(639, 360)
+scale = Vector2(6.37, 3.54)
+copy_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/Control/BackBufferCopy2"]
+material = SubResource("ShaderMaterial_hw5px")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -101.0
+offset_top = -102.0
+offset_right = -93.0
+offset_bottom = -93.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[editable path="Head/PlayerInteractor"]
